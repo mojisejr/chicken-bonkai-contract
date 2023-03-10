@@ -7,24 +7,24 @@ dotenv.config();
 
 const config: HardhatUserConfig = {
   defaultNetwork: "localhost",
-  networks: {
-    optimism_testnet: {
-      url: `https://opt-goerli.g.alchemy.com/v2/${process.env.op_test_alchemy_key}`,
-      accounts: [process.env.wallet!],
-    },
-    goerli: {
-      url: "https://eth-goerli.g.alchemy.com/v2/uLt7UG2JOQRZKuvuhG-ARE-7_2i5oTXA",
-      accounts: [process.env.wallet!],
-    },
-    bitkub_testnet: {
-      url: "https://rpc-testnet.bitkubchain.io",
-      accounts: [process.env.wallet!],
-    },
-    mumbai_testnet: {
-      url: "https://rpc-mumbai.maticvigil.com",
-      accounts: [process.env.wallet!],
-    },
-  },
+  // networks: {
+  //   optimism_testnet: {
+  //     url: `https://opt-goerli.g.alchemy.com/v2/${process.env.op_test_alchemy_key}`,
+  //     accounts: [process.env.wallet!],
+  //   },
+  //   goerli: {
+  //     url: "https://eth-goerli.g.alchemy.com/v2/uLt7UG2JOQRZKuvuhG-ARE-7_2i5oTXA",
+  //     accounts: [process.env.wallet!],
+  //   },
+  //   bitkub_testnet: {
+  //     url: "https://rpc-testnet.bitkubchain.io",
+  //     accounts: [process.env.wallet!],
+  //   },
+  //   mumbai_testnet: {
+  //     url: "https://rpc-mumbai.maticvigil.com",
+  //     accounts: [process.env.wallet!],
+  //   },
+  // },
   solidity: {
     version: "0.8.17",
     settings: {
