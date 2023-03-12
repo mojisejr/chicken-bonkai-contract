@@ -40,6 +40,7 @@ contract ChickenDAOBonkaiNFT is ERC721AQueryable, AccessControl, ReentrancyGuard
         ERC20
     }
 
+
     // GOLBAL STATE
     bool pause = false;
     bool frozenMetadata = false;
@@ -158,6 +159,10 @@ contract ChickenDAOBonkaiNFT is ERC721AQueryable, AccessControl, ReentrancyGuard
         round[_roundId].paused = false;
     }
 
+    function setPause(bool _value) external onlyRole(ADMIN_ROLE) {
+        pause = _value;
+    }
+    
     function setBaseUri(string memory _baseURI) external onlyRole(ADMIN_ROLE) {
         require(!frozenMetadata, 'SET_BASE_URI : metadata has been frozen');
         BASE_URI = _baseURI;
