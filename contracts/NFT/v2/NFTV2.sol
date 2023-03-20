@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
 // import "https://github.com/chiru-labs/ERC721A/blob/main/contracts/extensions/ERC721AQueryable.sol";
-import "../ERC721A/extensions/ERC721AQueryable.sol";
+import "../../ERC721A/extensions/ERC721AQueryable.sol";
 
 contract ChickenDAOBonkaiNFT is ERC721AQueryable, AccessControl, ReentrancyGuard, PaymentSplitter {
 

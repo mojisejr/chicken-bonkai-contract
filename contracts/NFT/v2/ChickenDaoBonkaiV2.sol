@@ -12,18 +12,44 @@ contract ChickenDAOBonkai is AccessControl {
 
   bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
+
+    struct Round {
+        string name;
+        string desc;
+        uint256 mintPrice;
+        uint256 start;
+        uint256 end;
+        uint256 allowance; //total nft allowcation for this round
+        bool paused;
+        uint256 maxMintPerTx;
+        TYPE mintType;
+        address asset;
+        uint256 assetRequired;
+        uint256 totalMinted;
+    }
+
   struct NFT {
     address asset;
     address owner;
     bool active;
     bool added;
     uint256 addedAt;
+    mapping(uint8 => Round) rounds;
   }
+
+    enum TYPE {
+        PUBLIC,
+        NFT,
+        WALLET,
+        ERC20
+    }
+
 
   bool paused = false;
  
 
   mapping(address => NFT) nft;
+
   address[] nftAddresses;
   uint256 nftCount;
 

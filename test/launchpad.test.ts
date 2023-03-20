@@ -1,8 +1,5 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { MerkleTree } from "merkletreejs";
-import keccak256 from "keccak256";
-import { time } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("LaunchPad Tests", async () => {
   async function deploy() {
@@ -55,18 +52,50 @@ describe("LaunchPad Tests", async () => {
     return { nftLau, nft1, nft2 };
   }
 
-  it("Deployment", async () => {
+  it("1. should be able to get individual nft structure", async () => {
     const { nftLau, nft1, nft2 } = await deploy();
     const nfta = await nftLau.getNFTByAddress(nft1.address);
-    const nftb = await nftLau.getNFTByAddress(nft2.address);
-    const nftall = await nftLau.getAllNfts();
-    const nftAddresses = await nftLau.getNFTAddresses();
-    console.log({ nfta, nftb });
 
-    console.log("all ,", nftall);
-    console.log("addresslist, ", nftAddresses);
-    // const nfts = await nftLau.getAllNfts();
+    expect(nfta.asset).to.be.equal(nft1.address);
+  });
 
-    // console.log("nft: ", nfts);
+  it("2. should be able to get all addedNFT", async () => {
+    const { nftLau, nft1, nft2 } = await deploy();
+    const allNfts = await nftLau.getAllNfts();
+
+    expect(allNfts[0].asset).to.be.equal(nft1.address);
+    expect(allNfts[1].asset).to.be.equal(nft2.address);
+  });
+
+  it("3. should be able to set active / inactive to the specific smart contract", async () => {
+    const { nftLau, nft1 } = await deploy();
+
+    await nftLau.setActive(nft1.address, false);
+
+    const result = await nft1.isPaused();
+
+    expect(result).to.be.false;
+  });
+
+  it("4. should be output the correct totalNFT in the launch pad", async () => {
+    const { nftLau } = await deploy();
+
+    const minted = await nftLau.totalNft();
+
+    expect(minted.toString()).to.be.equal("2");
+  });
+
+  it("5. getAllNfts() should be output empty array if has no nft", async () => {
+    const nftLauFac = await ethers.getContractFactory("ChickenDAOBonkai");
+
+    const [owner, admin, minter1, minter2, treasury, dev] =
+      await ethers.getSigners();
+
+    const nftLau = await nftLauFac.deploy(treasury.address, dev.address);
+    await nftLau.deployed();
+
+    const nft = await nftLau.getAllNfts();
+
+    console.log("nft: ", nft);
   });
 });
